@@ -1,0 +1,8 @@
+<h1>Edit your profile</h1>
+
+<%= form_for @user, url: update_user_path do |form| %>
+	<%= render partial: '/users/form', object: form %>
+	  <%= form.submit %>
+
+	<% end %>
+

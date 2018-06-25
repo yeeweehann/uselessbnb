@@ -1,0 +1,21 @@
+<% if signed_in? %>
+	<h1>Welcome <%= current_user.first_name %></h1>
+<% end %>
+
+<div id="welcome-gallery" class="container">
+	<div class="row">
+		<% @listings.each do |listing| %>
+		<div class="col-sm-3">
+			<div class="welcome-gallery-listing-image">
+				<% if listing.listing_cover != nil %>
+				<%= link_to image_tag(listing.listing_cover.thumb.to_s), listing_path(listing.id) %>
+				<% end %>
+			</div>
+			<div class="welcome-gallery-listing-tag">
+				<%= link_to "#{listing.name} at #{listing.location}", listing_path(listing.id) %>
+			</div>
+		</div>
+		<% end %>
+	</div>
+</div>
+

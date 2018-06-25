@@ -1,0 +1,35 @@
+<h1><%= @listing.name %> at <%= @listing.location %></h1>
+
+<%= "Place Type: " %><%= @listing.place_type %></br>
+<%= "Property Type: " %><%= @listing.property_type %></br>
+<%= "Number of Rooms: " %><%= @listing.room_number %></br>
+<%= "Number of Beds: " %><%= @listing.bed_number %></br>
+<%= "Guest Limit:" %><%= @listing.guest_number %></br>
+<%= "City: " %><%= @listing.city %></br>
+<%= "Zipcode: " %><%= @listing.zipcode %></br>
+<%= "State: " %><%= @listing.state %></br>
+<%= "Country: " %><%= @listing.country %></br>
+<%= "Price: " %><%= @listing.price %><%= "per day" %></br>
+<%= "Description: " %><%= @listing.description %></br>
+
+<% if @listing.image.count != 0 %>
+	<h2>Images</h2>
+	<% @listing.image.each do |x| %>
+	    <img src="<%= x.thumb.url %>">
+	<% end %>
+<% end %>
+
+<% if signed_in? %>
+
+	<% if current_user.superadmin? && @listing.verified == false %>
+	<br/><%= button_to "Verify", action: "verify" %>
+	<% end %>
+
+	<% if (current_user.moderator? || current_user.superadmin?) %>
+	<br/><a href="/listings/unverified">Back to Unverified Listings</a>
+	<% end %>
+
+	<br/><%= link_to 'Reserve', new_user_listing_reservation_path(listing_id: @listing.id, user_id: current_user) %>
+<% end %>
+
+	<h3><a href="/listings">Back to listings</a></h3>
